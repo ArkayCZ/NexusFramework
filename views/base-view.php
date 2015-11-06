@@ -12,8 +12,13 @@
 
     <body>
         <header>NexusFramework</header>
+
         <article>
             <?php $this->innerController->createView(); ?>
         </article>
+
+        <footer>
+            <p>NexusFramework - an MVC framework</p>
+        </footer>
     </body>
 </html>

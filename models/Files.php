@@ -8,6 +8,12 @@
  */
 class Files {
 
+    /**
+     * Reads a text file as a string, places \n at the and of each line.
+     * @param $path String; Path to the file to be read.
+     * @return string The file's content
+     * @throws FileNotFoundException Thrown in case the targeted file is not found
+     */
     public static function readString($path) {
         $handle = Files::createHandle($path);
         $string = "";
@@ -20,6 +26,12 @@ class Files {
         return $string;
     }
 
+    /**
+     * Reads a file line by line.
+     * @param $path String; Path to the file to be read.
+     * @return array Array of lines (strings)
+     * @throws FileNotFoundException Thrown in case the targeted file is not found
+     */
     public static function readLines($path) {
         $handle = Files::createHandle($path);
         $lines = array();
@@ -31,7 +43,7 @@ class Files {
         return $lines;
     }
 
-    public static function countLines($path) {
+    public static function countLines($path, $commentCharacter = null) {
         $handle = Files::createHandle($path);
 
         $lines = 0;
