@@ -1,0 +1,20 @@
+Models
+-------------------------------------
+
+Views
+-------------------------------------
+
+Controllers
+-------------------------------------
+
+
+
+GOALS:
+
+-Maintain a scalable architecture
+-Form framework
+-Database interface using PDO
+-User permission levels (0 - guest, 1 - logged in, 2 - moderator, 3 - admin)
+-Easy to use administration for managing database
+-Debugging features (ex. DB dumps)
+-Router with exception support
