@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: vesel
+ * Date: 06.11.2015
+ * Time: 20:00
+ */
+class ListFormDataFragment {
+
+    public $components;
+
+    public function addComponent($component) {
+        $this->components[] = $component;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComponents() {
+        return $this->components;
+    }
+
+
+
+}

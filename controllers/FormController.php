@@ -18,17 +18,7 @@ abstract class FormController extends Controller {
         $this->onCreate($params);
 
         if($_POST) {
-
-            $postSender = null;
-
-            foreach($this->components as $component) {
-                if(get_class($component) == "FormTextbox")
-                    $component->text = $_POST[$component->id];
-                else if(get_class($component) == "FormSpinner")
-                    $component->text = $_POST[$component->id];
-                else if(get_class($component) == "FormSubmit")
-                    $postSender = $component;
-            }
+            $postSender = $this->assignValuesFromPOST();
 
             $this->onPost($_POST, $postSender);
         }
@@ -39,6 +29,25 @@ abstract class FormController extends Controller {
 
     public function addComponent($component) {
         $this->components[] = $component;
+    }
+
+    public function getComponents() {
+        return $this->components;
+    }
+
+    public function assignValuesFromPOST() {
+        $postSender = null;
+
+        foreach($this->components as $component) {
+            if(get_class($component) == "FormTextbox")
+                $component->text = $_POST[$component->id];
+            else if(get_class($component) == "FormSpinner")
+                $component->text = $_POST[$component->id];
+            else if(get_class($component) == "FormSubmit" && $_POST[$component->id])
+                $postSender = $component;
+        }
+
+        return $postSender;
     }
 
     abstract function onCreate($params);

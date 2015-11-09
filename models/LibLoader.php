@@ -18,6 +18,9 @@ class LibLoader {
         LibLoader::$libraries[] = $libraryName;
     }
 
+    /**
+     * Lists all of the files in the 'lib_files' directory and saves them into an array
+     */
     public static function indexLibraries() {
         $files = scandir("lib_files");
 
