@@ -40,8 +40,8 @@ class LibLoader {
      * @deprecated Causes unnecessary server load.
      */
     public static function loadAll() {
-        foreach(LibLoader::$libraries as $lib) {
-            LibLoader::load($lib);
+        foreach(self::$libraries as $lib) {
+            self::load($lib);
         }
     }
 
@@ -52,15 +52,15 @@ class LibLoader {
      * @param $name Name of the library to be loaded.
      */
     public static function loadOne($name) {
-        foreach(LibLoader::$libraries as $lib) {
+        foreach(self::$libraries as $lib) {
             if($lib == $name)
-                LibLoader::load($lib);
+                self::load($lib);
         }
     }
 
     /**
      * Requires a library.
-     * @param $name Name of the library to be loaded.
+     * @param $name String; Name of the library to be loaded.
      * @internal
      */
     private static function load($name) {

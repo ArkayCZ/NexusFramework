@@ -17,6 +17,8 @@ if(KeyConfigLoader::getValue("auto-index-libraries") == "true")
 if(KeyConfigLoader::getValue("auto-load-libraries") == "true")
     LibLoader::loadAll();
 
+require_once("dependencies.php");
+
 $router = new RouterController();
 $router->process($_SERVER['REQUEST_URI']);
 $router->createView();

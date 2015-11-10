@@ -64,8 +64,24 @@ class Database {
         return $result->fetchAll();
     }
 
-    public function insert() {
+    public function insert($table, $values = array()) {
+        $query = "INSERT INTO '" . $table . "' " .
+            "('" . implode("', '", array_keys($values)) .
+            "') VALUES (" . str_repeat("?,", count($values) - 1) .
+            "?)";
 
+        return self::queryOne($query, array_values($values));
+    }
+
+    public function update($table, $values = array(), $condition, $params = array()) {
+        $query = "UPDATE '$table' SET '" . implode("' = ?, '", array_keys($values)) .
+            "' = ? " . $condition;
+
+        return self::query($query, array_merge(array_values($values), $params));
+    }
+
+    public function resetAutoincrement($table) {
+        $this->query("ALTER TABLE $table AUTO_INCREMENT = 1");
     }
 
 }
