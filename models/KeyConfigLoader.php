@@ -30,6 +30,9 @@ class KeyConfigLoader extends ConfigLoader {
             "' in config file '" . self::$currentFile . "'!");
     }
 
+    /**
+    * Gets all of the values from the selected file.
+    */
     public static function getAllValues() {
         return self::$currentFileLines;
     }

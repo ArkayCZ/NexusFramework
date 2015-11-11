@@ -75,6 +75,14 @@ class Files {
 
         return $handle;
     }
+    
+    public static function exists($path) {
+        return file_exists($path);
+    }
+    
+    public static function getChildren($folder) {
+        return scandir($folder);
+    }
 
 }
 

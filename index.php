@@ -11,13 +11,16 @@ spl_autoload_register("autoload");
 
 KeyConfigLoader::selectFile("main");
 
+require_once("dependencies.php");
+
 if(KeyConfigLoader::getValue("auto-index-libraries") == "true")
     LibLoader::indexLibraries();
 
 if(KeyConfigLoader::getValue("auto-load-libraries") == "true")
     LibLoader::loadAll();
-
-require_once("dependencies.php");
+    
+if(KeyConfigLoader::getValue("auto-index-layouts") == "true")
+    LayoutManager::indexLayouts();
 
 $router = new RouterController();
 $router->process($_SERVER['REQUEST_URI']);

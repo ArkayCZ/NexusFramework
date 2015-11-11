@@ -24,10 +24,8 @@ class ListFormDataFragment {
 	public function __toString() {
 		$string = "";
 		foreach($this->components as $comp) {
-			$string .= $comp->getText(); 
-		}
 
-		return $string;
+		}
 	}
 
 

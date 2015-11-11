@@ -1,6 +1,5 @@
 <?php
 
-//TODO: Prefix and suffix methods
 
 function str_contains($haystack, $needle) {
     return (str_indexof($haystack, $needle) !== false);

@@ -9,6 +9,7 @@
 class Database {
 
     private $connectionHandle;
+    private $changed;
 
     /**
      * Establishes connection the the specified MySQL database.
@@ -32,9 +33,13 @@ class Database {
      */
     public function query($query, $params = array()) {
         $result = $this->connectionHandle->prepare($query);
-        $result->execture($params);
-
-        return $result->rowCount();
+        $result->exectue($params);
+        
+        $rowCount = $result->rowCount();
+        if($rowCount > 0)
+            $this->changed = true;
+            
+        return $rowCount;
     }
 
     /**
@@ -47,6 +52,8 @@ class Database {
     public function queryOne($query, $params = array()) {
         $result = $this->connectionHandle->prepare($query);
         $result->exceute($params);
+        
+        $this->changed = true;
 
         return $result->fetch(PDO::FETCH_ASSOC);
     }
@@ -61,6 +68,8 @@ class Database {
         $result = $this->connectionHandle->prepare($query);
         $result->execute($params);
 
+        $this->changed = true;
+
         return $result->fetchAll();
     }
 
@@ -69,6 +78,8 @@ class Database {
             "('" . implode("', '", array_keys($values)) .
             "') VALUES (" . str_repeat("?,", count($values) - 1) .
             "?)";
+            
+        $this->changed = true;
 
         return self::queryOne($query, array_values($values));
     }
@@ -77,10 +88,13 @@ class Database {
         $query = "UPDATE '$table' SET '" . implode("' = ?, '", array_keys($values)) .
             "' = ? " . $condition;
 
+        $this->changed = true;
+
         return self::query($query, array_merge(array_values($values), $params));
     }
 
     public function resetAutoincrement($table) {
+        $this->changed = true;
         $this->query("ALTER TABLE $table AUTO_INCREMENT = 1");
     }
 

@@ -12,27 +12,37 @@
  * provided by the controllers ContentProvider
  *
  */
-class ListController extends Controller {
+abstract class ListController extends Controller {
 
     private $contentProvider;
     private $itemLayoutPath;
     private $itemsPerPage;
+    private $pageCount;
 
+    private $data;
     private $itemLayout;
-
     //Must be called at the end of child's process method
     public function process($params) {
+        if($this->itemLayoutPath == "")
+            $this->itemLayout = LayoutManager::getLayout("default-item-layout");
+        
         $this->itemLayout = Files::readString($this->itemLayoutPath);
+        $this->pageCount = $this->getRowCount() / $this->itemsPerPage;
+        
+        $this->data['itemLayout'] = $this->itemLayout;
+        $this->data['itemData'] = $this->data;
     }
 
     public function setContentProvider($contentProvider) {
         $this->contentProvider = $contentProvider;
     }
+    
+    public function setPerPage($number) {
+        $this->itemsPerPage = $number;
+    }
 
     public function setItemLayout($path) {
         $this->itemLayoutPath = $path;
     }
-
-
 
 }

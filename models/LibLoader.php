@@ -15,7 +15,7 @@ class LibLoader {
      * @param $libraryName Name of the library file WITHOUT the extension.
      */
     public static function add($libraryName) {
-        LibLoader::$libraries[] = $libraryName;
+        self::$libraries[] = $libraryName;
     }
 
     /**
@@ -28,7 +28,7 @@ class LibLoader {
             $parts = explode(".", $file);
 
             if($parts[count($parts) - 1] == "php")
-                LibLoader::add($parts[0]);
+                self::add($parts[0]);
         }
     }
 
