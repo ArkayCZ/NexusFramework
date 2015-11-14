@@ -12,10 +12,10 @@ class FromSpinner extends FormComponent {
     public $items = array();
     public $text = "";
 
-    function __construct($id, $css, $items) {
+    function __construct($id, $css, $label, $items) {
         parent::__construct($id, $css);
 
         $this->items = $items;
+        $this->label = $label;
     }
-
 }

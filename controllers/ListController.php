@@ -14,13 +14,20 @@
  */
 abstract class ListController extends Controller {
 
+    //Content provider to serve is an interface to the database for list data
     private $contentProvider;
+    //path to html layout for each single item
     private $itemLayoutPath;
+    //items on a single page
     private $itemsPerPage;
+    //the number of pages, gets calculated automatically
     private $pageCount;
 
-    private $data;
+    //data for the list items (array a arrays)
+    private $listData;
+    //the actual html layout for each single item (the content of $itemLayoutPath)
     private $itemLayout;
+
     //Must be called at the end of child's process method
     public function process($params) {
         if($this->itemLayoutPath == "")
@@ -30,17 +37,28 @@ abstract class ListController extends Controller {
         $this->pageCount = $this->getRowCount() / $this->itemsPerPage;
         
         $this->data['itemLayout'] = $this->itemLayout;
-        $this->data['itemData'] = $this->data;
+        $this->data['itemData'] = $this->listData;
     }
 
+    /**
+     * Sets content provider for the ListController
+     * @param $contentProvider
+     */
     public function setContentProvider($contentProvider) {
         $this->contentProvider = $contentProvider;
     }
-    
+
+    /**
+     * Sets the number of items per page
+     * @param $number
+     */
     public function setPerPage($number) {
         $this->itemsPerPage = $number;
     }
 
+    /**
+     * @param $path
+     */
     public function setItemLayout($path) {
         $this->itemLayoutPath = $path;
     }

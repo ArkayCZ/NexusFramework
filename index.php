@@ -9,6 +9,8 @@
 mb_internal_encoding("utf-8");
 spl_autoload_register("autoload");
 
+session_start();
+
 KeyConfigLoader::selectFile("main");
 
 require_once("dependencies.php");

@@ -18,3 +18,12 @@ GOALS:
 -Easy to use administration for managing database
 -Debugging features (ex. DB dumps)
 -Router with exception support
+
+DATABASES:
+users {
+    id: A_I, PRIMARY_KEY, INT
+    username: VARCHAR 50
+    email: VARCHAR 150
+    password: VARCHAR 260
+    permission_level: INT
+}

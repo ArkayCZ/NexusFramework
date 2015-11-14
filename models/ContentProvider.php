@@ -8,7 +8,7 @@
  */
 class ContentProvider extends Database {
 
-    private $table;
+    protected $table;
     private $recordCount;
 
     public function __construct($host, $database, $username, $password) {
@@ -25,7 +25,7 @@ class ContentProvider extends Database {
     
     public function getRecordCount() {
          if($this->changed) {
-            $this->recordCount = $this->query("SELECT COUNT(*) FROM " . $table);
+            $this->recordCount = $this->query("SELECT COUNT(*) FROM " . $this->table);
             $this->changed = false;
          } else {
              return $this->rowCount;

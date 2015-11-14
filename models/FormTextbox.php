@@ -10,11 +10,12 @@ class FormTextbox extends FormComponent {
 
     public $type;
 
-    function __construct($id, $css, $text, $type) {
+    function __construct($id, $css, $label, $type, $text = "") {
         parent::__construct($id, $css);
 
         $this->text = $text;
         $this->type = $type;
+        $this->label = $label;
     }
 
     /**

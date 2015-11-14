@@ -15,8 +15,9 @@ abstract class Controller
 
     public abstract function process($params);
 
-    public function getCurrentUser() {
-        //TODO: implement getUser method
+    public function getPermissionLevel() {
+        if(!$_SESSION['user'])
+            return 0;
     }
 
     /**
@@ -40,6 +41,19 @@ abstract class Controller
         header("Location: " . $url);
         header("Connection: close");
         exit;
+    }
+
+    public function addMessage($message) {
+        if(!isset($_SESSION['messages']))
+            $_SESSION['messages'] = array();
+
+        $_SESSION['messages'][] = $message;
+    }
+
+    public function getMessages() {
+        if(isset($_SESSION['messages']))
+            return $_SESSION['messages'];
+        else return array();
     }
 
 }

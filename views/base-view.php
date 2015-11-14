@@ -11,7 +11,17 @@
     </head>
 
     <body>
-        <header>NexusFramework</header>
+        <header><h1>NexusFramework</h1></header>
+
+        <div class="message-box">
+            <?php foreach($messages as $message) : ?>
+            <div class="message">
+                <p><?= $message ?></p>
+            </div>
+            <?php endforeach ?>
+        </div>
+
+        <br clear="both" />
 
         <article>
             <?php $this->innerController->createView(); ?>

@@ -1,6 +1,5 @@
 <?php
 
-
 function str_contains($haystack, $needle) {
     return (str_indexof($haystack, $needle) !== false);
 }
@@ -38,4 +37,8 @@ function str_explode($string, $delimeter) {
 
 function str_implode($array, $glue) {
     return implode($glue, $array);
+}
+
+function str_salted_hash($string) {
+    return hash("sha256", $string . "ion#def57/9s*efa");
 }

@@ -8,9 +8,11 @@
 
 
 abstract class FormComponent {
+
     public $id;
     public $cssClass;
     public $text;
+    public $label;
 
     public function __construct($id, $css) {
         $this->id = $id;

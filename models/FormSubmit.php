@@ -15,6 +15,4 @@ class FormSubmit extends FormComponent {
 
         $this->text = $text;
     }
-
-
 }

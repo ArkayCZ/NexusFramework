@@ -8,8 +8,12 @@
  */
 class Database {
 
-    private $connectionHandle;
-    private $changed;
+    private static $connectionHandle;
+    private static $currentUsername;
+    private static $currentPassword;
+    private static $currentDBName;
+    private static $currentHost;
+    protected $changed;
 
     /**
      * Establishes connection the the specified MySQL database.
@@ -19,9 +23,19 @@ class Database {
      * @param $database String; Database name
      */
     public function connect($host, $username, $password, $database) {
+
+
+        if($this->currentUsername == $username &&
+            $this->currentPassword == $password &&
+            $this->currentDBName == $database &&
+            $this->currentHost ==  $host &&
+            isset(self::$connectionHandle)
+        ) return;
+
         $settings = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-        $this->connectionHandle = @new PDO("mysql:host=$host;dbname=$database", $username, $password, $settings);
+
+        self::$connectionHandle = @new PDO("mysql:host=$host;dbname=$database", $username, $password, $settings);
     }
 
     /**
@@ -32,7 +46,7 @@ class Database {
      * @return mixed Number of rows effected
      */
     public function query($query, $params = array()) {
-        $result = $this->connectionHandle->prepare($query);
+        $result = self::$connectionHandle->prepare($query);
         $result->exectue($params);
         
         $rowCount = $result->rowCount();
@@ -50,7 +64,7 @@ class Database {
      * @return mixed First found object
      */
     public function queryOne($query, $params = array()) {
-        $result = $this->connectionHandle->prepare($query);
+        $result = self::$connectionHandle->prepare($query);
         $result->exceute($params);
         
         $this->changed = true;
@@ -65,7 +79,7 @@ class Database {
      * @return mixed
      */
     public function queryAll($query, $params = array()) {
-        $result = $this->connectionHandle->prepare($query);
+        $result = self::$connectionHandle->prepare($query);
         $result->execute($params);
 
         $this->changed = true;
@@ -81,7 +95,7 @@ class Database {
             
         $this->changed = true;
 
-        return self::queryOne($query, array_values($values));
+        return $this->queryOne($query, array_values($values));
     }
 
     public function update($table, $values = array(), $condition, $params = array()) {
@@ -90,12 +104,16 @@ class Database {
 
         $this->changed = true;
 
-        return self::query($query, array_merge(array_values($values), $params));
+        return $this->query($query, array_merge(array_values($values), $params));
     }
 
     public function resetAutoincrement($table) {
         $this->changed = true;
         $this->query("ALTER TABLE $table AUTO_INCREMENT = 1");
+    }
+
+    public function isConnected() {
+        return isset(self::$connectionHandle);
     }
 
 }

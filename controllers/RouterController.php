@@ -46,6 +46,7 @@ class RouterController extends Controller {
         $this->data["title"] = $this->innerController->header["title"];
         $this->data["keywords"] = $this->innerController->header["keywords"];
         $this->data["description"] = $this->innerController->header["description"];
+        $this->data['messages'] = $this->getMessages();
 
         $this->view = "base-view";
     }
